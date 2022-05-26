@@ -37,7 +37,7 @@ const skillNames = [
  * Parses player's data from an individual player's page.
  * @return Player the player
  */
-const parsePlayer = (): Player => {
+export const parsePlayer = (): Player => {
   /*
    * Get the player's page main elements by selecting the div siblings of #main-1 (which is actually the skillsEl).
    * Note that some div siblings are ignored, hence the extra commas in below destructuring.
