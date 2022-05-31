@@ -1,6 +1,6 @@
 {
   "name": "@do-tools/parser",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Module for parsing different components of DO",
   "type": "module",
   "main": "dist/index.js",
@@ -9,8 +9,10 @@
     "dist"
   ],
   "scripts": {
+    "dev": "tsc --watch",
     "build": "tsc",
-    "lint": "eslint --ext .ts src"
+    "lint": "eslint --ext .ts src",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "football",

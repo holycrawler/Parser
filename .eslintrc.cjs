@@ -11,7 +11,7 @@ module.exports = {
       "warn",
       {
         trailingComma: "es5",
-        printWidth: 140,
+        printWidth: 120,
       },
     ],
     "no-var": "error",
