@@ -1,9 +1,7 @@
-import { parseClubInfo } from "./clubinfo";
-
 /**
  * Skill names, from player's profile.
  */
-const SKILL_NAMES = [
+export const SKILL_NAMES = [
   // 1st row
   ["reflexes", "tackling", "creativity", "shooting", "teamWork"],
   // 2nd row
@@ -19,20 +17,20 @@ const SKILL_NAMES = [
 /**
  * Defines the player's skills
  */
-interface PlayerSkills {
-  [key: typeof SKILL_NAMES[number]]: number;
+export interface PlayerSkills {
+  [key: (typeof SKILL_NAMES)[number]]: number;
 }
 
 /**
  * Defines all the possible player's positions.
  */
-type Position = "GK" | "DC" | "DL" | "DR" | "MC" | "ML" | "MR" | "FC" | "FL" | "FR";
+export type Position = "GK" | "DC" | "DL" | "DR" | "MC" | "ML" | "MR" | "FC" | "FL" | "FR";
 
 /**
  * Defines the mapping of a position with its pixel coordinates in the parent container, for easier lookup.
  * @see getPosition
  */
-const POSITION_COORDS: Record<string, Position> = {
+export const POSITION_COORDS: Record<string, Position> = {
   // I stole these from dug-tool
   "69px10px": "GK",
   "69px40px": "DC",
@@ -64,7 +62,7 @@ const getPosition = (positionsEl: Element): Position => {
 /**
  * Defines the player profile.
  */
-interface Player {
+export interface Player {
   id: number;
   name: string;
   age: number;
@@ -85,7 +83,7 @@ interface Player {
  * Parses player's data from an individual player's page.
  * @return Player the player
  */
-const parsePlayer = (): Player => {
+export const parsePlayer = (): Player => {
   /*
    * Get the player's page main elements by selecting the div siblings of #main-1 (which is actually the skillsEl).
    * Note that some div siblings are ignored, hence the extra commas in below destructuring.
@@ -131,5 +129,4 @@ const parsePlayer = (): Player => {
 
 export default {
   parsePlayer,
-  parseClubInfo,
 };

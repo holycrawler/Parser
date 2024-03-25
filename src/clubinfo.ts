@@ -1,4 +1,24 @@
-export const parseClubInfo = () => {
+export interface ClubInfo {
+  teamName: string;
+  shortName: string;
+  country: string;
+  lastActive: string;
+  stadium: {
+    name: string;
+    capacity: number;
+  };
+  rating: number;
+  manager: string;
+  league: {
+    name: string;
+    url: string;
+  };
+  id: number;
+  trophies: string[];
+  achievements: string[];
+}
+
+export const parseClubInfo = (): ClubInfo => {
   const flagEl = document.querySelector("img[src*='images/flags_round']") as HTMLImageElement; // selecting the big round flag left of the club name
   const lastActiveEl = document.querySelectorAll("td.maninfo") as NodeListOf<HTMLTableCellElement>; // selecting the last
 
@@ -18,7 +38,7 @@ export const parseClubInfo = () => {
     teamName: teamNameEl.textContent!.trim(),
     shortName: shortNameEl.textContent!.trim(),
     country: flagEl.getAttribute("title")!,
-    lastActive: lastActiveEl[5].textContent!.trim(), // i didn't convert this to unix time because it's not a fixed format
+    lastActive: lastActiveEl[5].textContent!.trim(), // I didn't convert this to unix time because it's not a fixed format
     stadium: { name: stadium[1].trim(), capacity: Number(stadium[2]) },
     rating: Number(ratingEl.textContent!.replace(/\D+/g, "")),
     manager: managerEl.textContent!.trim(),
