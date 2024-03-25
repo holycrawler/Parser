@@ -1,4 +1,4 @@
-const parseClubInfo = () => {
+export const parseClubInfo = () => {
   const flagEl = document.querySelector("img[src*='images/flags_round']") as HTMLImageElement; // selecting the big round flag left of the club name
   const lastActiveEl = document.querySelectorAll("td.maninfo") as NodeListOf<HTMLTableCellElement>; // selecting the last
 

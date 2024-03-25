@@ -1,6 +1,6 @@
 {
   "name": "@do-tools/parser",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Module for parsing different components of DO",
   "type": "module",
   "main": "dist/index.js",
@@ -26,6 +26,13 @@
     "email": "silviuburcea@gmail.com",
     "url": "https://github.com/silviuburceadev/"
   },
+  "contributors": [
+    {
+      "name": "holyCrawler",
+      "email": "theholycrawler@gmail.com",
+      "url": "https://github.com/holyCrawler/"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.25.0",

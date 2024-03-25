@@ -1,4 +1,4 @@
-// TODO maybe move types to a separate package?
+import { parseClubInfo } from "./clubinfo";
 
 /**
  * Skill names, from player's profile.
@@ -33,7 +33,7 @@ type Position = "GK" | "DC" | "DL" | "DR" | "MC" | "ML" | "MR" | "FC" | "FL" | "
  * @see getPosition
  */
 const POSITION_COORDS: Record<string, Position> = {
-  // i stole these from dug-tool
+  // I stole these from dug-tool
   "69px10px": "GK",
   "69px40px": "DC",
   "20px40px": "DL",
@@ -131,4 +131,5 @@ const parsePlayer = (): Player => {
 
 export default {
   parsePlayer,
+  parseClubInfo,
 };
