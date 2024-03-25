@@ -8,11 +8,11 @@ const parseClubInfo = () => {
 
   const stadium = StadiumEl.textContent!.match(/(.*)\([0-9]*\/([0-9]*)\)/)!; // extracting the stadium name and capacity
   const leagueLinkEl = leagueEl.firstElementChild as HTMLAnchorElement;
-  
+
   const trophiesEl = document.querySelectorAll("img[src*='images/club/cups']") as NodeListOf<HTMLImageElement>;
-  const achivementsEl = document.querySelectorAll("img[src*='images/trophies']") as NodeListOf<HTMLImageElement>;
+  const achievementsEl = document.querySelectorAll("img[src*='images/trophies']") as NodeListOf<HTMLImageElement>;
   const trophies = Array.from(trophiesEl!).map((el) => el.getAttribute("title")!);
-  const achivements = Array.from(achivementsEl).map((el) => el.getAttribute("title")!);
+  const achievements = Array.from(achievementsEl).map((el) => el.getAttribute("title")!);
 
   return {
     teamName: teamNameEl.textContent!.trim(),
@@ -27,8 +27,8 @@ const parseClubInfo = () => {
       url: leagueLinkEl.href,
     },
     id: Number(idEl.textContent!.replace(/\D+/g, "")),
-    trophies: trophies,
-    achivements: achivements,
+    trophies,
+    achievements,
   };
 };
 

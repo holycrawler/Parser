@@ -96,7 +96,7 @@ const parsePlayer = (): Player => {
   const clubLinkEl = clubEl.firstElementChild as HTMLAnchorElement;
 
   // economics = financial + status
-  const [skillsEl, personalityEl, positionsEl, formEl, economicsEl] = mainEl.querySelectorAll(":scope > div");
+  const [skillsEl, personalityEl, positionsEl] = mainEl.querySelectorAll(":scope > div");
   const xpEl = mainEl.previousElementSibling!.querySelector("div[title*='XP']") as HTMLElement;
 
   const name = nameEl.textContent!;
