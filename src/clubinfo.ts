@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 interface ClubInfo {
   id: number;
   teamName: string;
@@ -66,10 +67,26 @@ const parseClubInfo = (doc: Document = document): ClubInfo => {
   const achivementsEl = doc.querySelectorAll("img[src*='images/trophies']") as NodeListOf<HTMLImageElement>;
 
   // Extract the titles of the trophies and achievements
+=======
+const parseClubInfo = () => {
+  const flagEl = document.querySelector("img[src*='images/flags_round']") as HTMLImageElement; // selecting the big round flag left of the club name
+  const lastActiveEl = document.querySelectorAll("td.maninfo") as NodeListOf<HTMLTableCellElement>; // selecting the last
+
+  const [teamNameEl, shortNameEl, StadiumEl, ratingEl, managerEl, , leagueEl, idEl] = (
+    document.querySelector("div#content_main > div:last-child table") as HTMLTableElement
+  ).querySelectorAll("td[class*=matches_row]:nth-child(2)") as NodeListOf<HTMLTableCellElement>; // selecting the 2nd column of the "quick facts" table
+
+  const stadium = StadiumEl.textContent!.match(/(.*)\([0-9]*\/([0-9]*)\)/)!; // extracting the stadium name and capacity
+  const leagueLinkEl = leagueEl.firstElementChild as HTMLAnchorElement;
+  
+  const trophiesEl = document.querySelectorAll("img[src*='images/club/cups']") as NodeListOf<HTMLImageElement>;
+  const achivementsEl = document.querySelectorAll("img[src*='images/trophies']") as NodeListOf<HTMLImageElement>;
+>>>>>>> 64bb6b53bb96759a921bbfa25f386342f8b2b74b
   const trophies = Array.from(trophiesEl!).map((el) => el.getAttribute("title")!);
   const achivements = Array.from(achivementsEl).map((el) => el.getAttribute("title")!);
 
   return {
+<<<<<<< HEAD
     id: Number(idEl.textContent!.replace(/\D+/g, "")),
     teamName: teamNameEl.textContent!.trim(),
     shortName: shortNameEl.textContent!.trim(),
@@ -87,10 +104,20 @@ const parseClubInfo = (doc: Document = document): ClubInfo => {
       capacity: Number(stadium[2]),
     },
     rating: Number(ratingEl.textContent!.replace(/\D+/g, "")),
+=======
+    teamName: teamNameEl.textContent!.trim(),
+    shortName: shortNameEl.textContent!.trim(),
+    country: flagEl.getAttribute("title")!,
+    lastActive: lastActiveEl[5].textContent!.trim(), // i didn't convert this to unix time because it's not a fixed format
+    stadium: { name: stadium[1].trim(), capacity: Number(stadium[2]) },
+    rating: Number(ratingEl.textContent!.replace(/\D+/g, "")),
+    manager: managerEl.textContent!.trim(),
+>>>>>>> 64bb6b53bb96759a921bbfa25f386342f8b2b74b
     league: {
       name: leagueLinkEl.textContent!,
       url: leagueLinkEl.href,
     },
+<<<<<<< HEAD
     trophies: trophies,
     achievements: achivements,
     premiumAccount: {
@@ -102,3 +129,14 @@ const parseClubInfo = (doc: Document = document): ClubInfo => {
 };
 
 export default parseClubInfo;
+=======
+    id: Number(idEl.textContent!.replace(/\D+/g, "")),
+    trophies: trophies,
+    achivements: achivements,
+  };
+};
+
+export default {
+  parseClubInfo,
+};
+>>>>>>> 64bb6b53bb96759a921bbfa25f386342f8b2b74b
