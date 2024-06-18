@@ -37,35 +37,17 @@ export interface ClubInfo {
  */
 export const parseClubInfo = (doc: Document = document): ClubInfo => {
   // Select the image element representing the club's flag
-  const flagEl = doc.querySelector(
-    "img[src*='images/flags_round']"
-  ) as HTMLImageElement;
+  const flagEl = doc.querySelector("img[src*='images/flags_round']") as HTMLImageElement;
 
   // Select the last "maninfo" element (RATING/MANAGER/LAST ACTIVE) under the teams name
-  const lastActiveEl = doc.querySelectorAll(
-    "td.maninfo:last-child"
-  )![2] as HTMLTableCellElement;
+  const lastActiveEl = doc.querySelectorAll("td.maninfo:last-child")![2] as HTMLTableCellElement;
 
   // Select the quick facts table
-  const quickFactsTableEl = doc.querySelector(
-    "div#content_main > div:last-child table"
-  ) as HTMLTableElement;
+  const quickFactsTableEl = doc.querySelector("div#content_main > div:last-child table") as HTMLTableElement;
 
   // Select the elements containing the club's details
-  const [
-    teamNameEl,
-    shortNameEl,
-    StadiumEl,
-    ratingEl,
-    managerEl,
-    ,
-    leagueEl,
-    idEl,
-    viewdByEl,
-    fameRankEl,
-  ] = quickFactsTableEl.querySelectorAll(
-    "td[class*=matches_row]:nth-child(2)"
-  ) as NodeListOf<HTMLTableCellElement>;
+  const [teamNameEl, shortNameEl, StadiumEl, ratingEl, managerEl, , leagueEl, idEl, viewdByEl, fameRankEl] =
+    quickFactsTableEl.querySelectorAll("td[class*=matches_row]:nth-child(2)") as NodeListOf<HTMLTableCellElement>;
 
   // Check if the club has premium
   const pa = quickFactsTableEl.querySelectorAll("img").length === 1;
@@ -77,27 +59,15 @@ export const parseClubInfo = (doc: Document = document): ClubInfo => {
   const leagueLinkEl = leagueEl.firstElementChild as HTMLAnchorElement;
 
   // Extract the manager's ID from the href attribute
-  const managerId = Number(
-    (managerEl.firstElementChild as HTMLAnchorElement).href.match(
-      /toid\/(\d+)/
-    )![1]
-  );
+  const managerId = Number((managerEl.firstElementChild as HTMLAnchorElement).href.match(/toid\/(\d+)/)![1]);
 
   // Select all the trophy and achievement elements
-  const trophiesEl = doc.querySelectorAll(
-    "img[src*='images/club/cups']"
-  ) as NodeListOf<HTMLImageElement>;
-  const achivementsEl = doc.querySelectorAll(
-    "img[src*='images/trophies']"
-  ) as NodeListOf<HTMLImageElement>;
+  const trophiesEl = doc.querySelectorAll("img[src*='images/club/cups']") as NodeListOf<HTMLImageElement>;
+  const achivementsEl = doc.querySelectorAll("img[src*='images/trophies']") as NodeListOf<HTMLImageElement>;
 
   // Extract the titles of the trophies and achievements
-  const trophies = Array.from(trophiesEl!).map(
-    (el) => el.getAttribute("title")!
-  );
-  const achivements = Array.from(achivementsEl).map(
-    (el) => el.getAttribute("title")!
-  );
+  const trophies = Array.from(trophiesEl!).map((el) => el.getAttribute("title")!);
+  const achivements = Array.from(achivementsEl).map((el) => el.getAttribute("title")!);
 
   return {
     id: Number(idEl.textContent!.replace(/\D+/g, "")),
