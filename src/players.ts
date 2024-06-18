@@ -14,10 +14,10 @@ const ATTRIBUTE_NAMES = [
   ["eccentricity"],
 ].flat(1);
 /**
-  + * Interface that defines the attributes of a player.
-  + * The keys are the names of the attributes, which are defined in the `ATTRIBUTE_NAMES` constant.
-  + * The values are the player's attributes, as numbers.
-  + */
++ * Interface that defines the attributes of a player.
++ * The keys are the names of the attributes, which are defined in the `ATTRIBUTE_NAMES` constant.
++ * The values are the player's attributes, as numbers.
++ */
 interface PlayersAttributes {
   [key: (typeof ATTRIBUTE_NAMES)[number]]: number;
 }
@@ -27,7 +27,7 @@ interface PlayersAttributes {
  * The keys are the names of the attributes, which are defined in the `ATTRIBUTE_NAMES` constant.
  * The values are the player's attributes, as numbers.
  */
-interface Player {
+export interface Player {
   position: string;
   nationalTeam: string | null;
   name: string;
@@ -49,19 +49,28 @@ interface Player {
  * @param {Document} [doc=document] players page document. defaults to current document if not passed
  * @returns {Player[]} An array of player objects @see {@link Player}.
  */
-const parsePlayerTables = (doc = document): Player[] => {
+export const parsePlayerTables = (doc = document): Player[] => {
   // Get all player tables on the page. GOALKEEPERS / DEFENDERS / MIDFIELDERS / ATTACKERS
-  const playerTables = [...(doc.querySelectorAll("table.forumline") as NodeListOf<HTMLTableElement>)];
+  const playerTables = [
+    ...(doc.querySelectorAll(
+      "table.forumline"
+    ) as NodeListOf<HTMLTableElement>),
+  ];
 
   // check if the current page is the player page of the user's own team
   // all the cells are increased by 1 if the user is on their own team
   // the reason for this is that on the user own the first cell is used for active position(setting tactics)
-  const isOwnTeam = doc.querySelector("div#top_positions")!.childElementCount > 0 ? 1 : 0;
+  const isOwnTeam =
+    doc.querySelector("div#top_positions")!.childElementCount > 0 ? 1 : 0;
 
   // Parse each player table and return an array of player objects
   return playerTables
     .map((table) => {
-      return [...(table.querySelectorAll("tr[class*='matches_row']") as NodeListOf<HTMLTableRowElement>)].map((tr) => {
+      return [
+        ...(table.querySelectorAll(
+          "tr[class*='matches_row']"
+        ) as NodeListOf<HTMLTableRowElement>),
+      ].map((tr) => {
         const cells = tr.cells;
 
         const playerPosEl = cells[0 + isOwnTeam];
@@ -76,9 +85,13 @@ const parsePlayerTables = (doc = document): Player[] => {
 
         const playerID = Number(playerLinkEl.href.match(/playerID\/(\d+)/)![1]);
 
-        const NT = playerPosEl.firstElementChild!.className.replace("_icon", "").toUpperCase();
+        const NT = playerPosEl
+          .firstElementChild!.className.replace("_icon", "")
+          .toUpperCase();
 
-        const onLoan = playerLinkEl.textContent!.trim().match(/^([^\(\)]+) \([^\(\)]*\)$/);
+        const onLoan = playerLinkEl
+          .textContent!.trim()
+          .match(/^([^\(\)]+) \([^\(\)]*\)$/);
         const loanedOut = !playerInfoEl.firstElementChild;
 
         const transferListed = !!cells[2 + isOwnTeam].querySelector(".pl_tra");
@@ -89,11 +102,15 @@ const parsePlayerTables = (doc = document): Player[] => {
 
         const attributesObject: PlayersAttributes = {};
         if (!loanedOut) {
-          const playerAttributs = [...playerInfoEl.querySelectorAll("td[class]")]
+          const playerAttributs = [
+            ...playerInfoEl.querySelectorAll("td[class]"),
+          ]
             .map((td) => Number(td.textContent))
             .filter((attr) => attr);
 
-          ATTRIBUTE_NAMES.forEach((ATTRIBUTE, i) => (attributesObject[ATTRIBUTE] = playerAttributs[i]));
+          ATTRIBUTE_NAMES.forEach(
+            (ATTRIBUTE, i) => (attributesObject[ATTRIBUTE] = playerAttributs[i])
+          );
         }
 
         return {
@@ -123,4 +140,3 @@ const parsePlayerTables = (doc = document): Player[] => {
 };
 
 //parsePlayerTables()
-export default parsePlayerTables;

@@ -31,7 +31,11 @@ const parceLeagueTable = (doc: Document = document): LeagueTable[] => {
       /** The name of the team. */
       teamName: cells[1].textContent!.trim(),
       /** The ID of the team. */
-      teamId: Number((cells[1].firstElementChild as HTMLAnchorElement).href.match(/clubid\/(\d+)/)![1]),
+      teamId: Number(
+        (cells[1].firstElementChild as HTMLAnchorElement).href.match(
+          /clubid\/(\d+)/
+        )![1]
+      ),
       /** The number of played matches. */
       pl: Number(cells[3].textContent!.trim()),
       /** The number of wins. */
@@ -64,7 +68,9 @@ interface MatchTablehead {
  * @return {MatchTablehead[]} - An array of MatchTablehead objects.
  */
 const parseMatchTablehead = (doc: Document = document): MatchTablehead[] => {
-  const tableHeads = [...doc.querySelectorAll("div.cup_title")].map((th) => th.textContent!.trim());
+  const tableHeads = [...doc.querySelectorAll("div.cup_title")].map((th) =>
+    th.textContent!.trim()
+  );
   return tableHeads.map((e) => {
     const match = e.match(/Round (\d+) matches\s?\((\S+)\s?(\S+)\s?\s?\)/);
     const roundNumber = match![1];
@@ -120,7 +126,7 @@ const parseMatches = (doc: Document = document): Matches[] => {
   });
 };
 
-interface League {
+export interface League {
   leagueTable: LeagueTable[];
   RoundMatches: Matches[];
 }
@@ -131,11 +137,9 @@ interface League {
  * @param {Document} [doc=document] - The document to parse from, defaults to the current document if not passed.
  * @return {League} - An object containing the league table and round matches.
  */
-const parseLeague = (doc: Document = document): League => {
+export const parseLeague = (doc: Document = document): League => {
   return {
     leagueTable: parceLeagueTable(doc),
     RoundMatches: parseMatches(doc),
   };
 };
-
-export default parseLeague;
